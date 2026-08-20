@@ -1,8 +1,10 @@
 ---
 import { directionsUrl, phoneHref, socialLinks } from "@/data/site";
 import geistLatinUrl from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
-import barlowCondensed700LatinUrl from "@fontsource/barlow-condensed/files/barlow-condensed-latin-700-normal.woff2?url";
 import barlowCondensed800LatinUrl from "@fontsource/barlow-condensed/files/barlow-condensed-latin-800-normal.woff2?url";
+import "@fontsource-variable/geist";
+import "@fontsource/barlow-condensed/latin-700.css";
+import "@fontsource/barlow-condensed/latin-800.css";
 import "@/styles/global.css";
 
 type Props = {
@@ -16,31 +18,6 @@ const currentYear = new Date().getFullYear();
 const isHomePage = Astro.url.pathname === "/";
 const isMenuPage = Astro.url.pathname.startsWith("/menu");
 const restaurantDescription = "Grand Buffet serves Chinese food, sushi, and hibachi in Pace, Florida. Dine in for lunch or dinner, or call ahead for takeout.";
-const fontFaces = `
-  @font-face {
-    font-family: "Geist Variable";
-    font-style: normal;
-    font-display: optional;
-    font-weight: 100 900;
-    src: url("${geistLatinUrl}") format("woff2-variations");
-  }
-
-  @font-face {
-    font-family: "Barlow Condensed";
-    font-style: normal;
-    font-display: optional;
-    font-weight: 700;
-    src: url("${barlowCondensed700LatinUrl}") format("woff2");
-  }
-
-  @font-face {
-    font-family: "Barlow Condensed";
-    font-style: normal;
-    font-display: optional;
-    font-weight: 800;
-    src: url("${barlowCondensed800LatinUrl}") format("woff2");
-  }
-`;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -107,7 +84,6 @@ const structuredData = {
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href={geistLatinUrl} as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href={barlowCondensed800LatinUrl} as="font" type="font/woff2" crossorigin="anonymous" />
-    <style is:inline set:html={fontFaces} />
     <meta property="og:type" content="restaurant.restaurant" />
     <meta property="og:site_name" content="Grand Buffet" />
     <meta property="og:title" content={title} />
