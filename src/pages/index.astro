@@ -1,15 +1,33 @@
 ---
-import { Picture } from "astro:assets";
+import { getImage, Picture } from "astro:assets";
 import { ActionLink } from "@/components/ActionLink";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 import heroImage from "@/assets/grand-buffet-spread.png";
+import heroPlaceholder from "@/assets/grand-buffet-spread-placeholder.webp?inline";
 import { directionsUrl, onlineOrderLinks, phoneHref } from "@/data/site";
 
 const title = "Chinese Buffet in Pace, FL | Grand Buffet";
 const description = "Grand Buffet serves Chinese food, sushi, and hibachi in Pace, FL. See buffet prices, the takeout menu, hours, and directions. Open daily at 11 AM.";
+const heroWidths = [640, 960, 1280, 1600];
+const heroSizes = "(max-width: 1023px) 100vw, 55vw";
+const heroAvifSources = await Promise.all(heroWidths.map((width) => getImage({ src: heroImage, width, format: "avif" })));
+const heroPreloadSrcSet = heroAvifSources.map(({ src }, index) => `${src} ${heroWidths[index]}w`).join(", ");
+const heroPreloadHref = heroAvifSources[2].src;
 ---
 
 <SiteLayout title={title} description={description}>
+      <Fragment slot="head">
+        <link
+          rel="preload"
+          as="image"
+          type="image/avif"
+          href={heroPreloadHref}
+          imagesrcset={heroPreloadSrcSet}
+          imagesizes={heroSizes}
+          fetchpriority="high"
+        />
+      </Fragment>
+
       <section class="bg-white">
         <div class="mx-auto grid max-w-[90rem] lg:min-h-[600px] lg:grid-cols-[0.9fr_1.1fr] xl:min-h-[650px] 2xl:min-h-[680px]">
           <div class="flex items-center px-4 py-14 sm:px-6 sm:py-18 md:px-8 md:py-20 lg:px-10 lg:py-24 xl:px-12 2xl:px-16">
@@ -46,13 +64,16 @@ const description = "Grand Buffet serves Chinese food, sushi, and hibachi in Pac
             </div>
           </div>
 
-          <div class="relative min-h-[310px] overflow-hidden bg-charcoal sm:min-h-[420px] lg:min-h-full">
+          <div
+            class="relative min-h-[310px] overflow-hidden bg-charcoal bg-cover bg-center sm:min-h-[420px] lg:min-h-full"
+            style={`background-image: url("${heroPlaceholder}")`}
+          >
             <Picture
               src={heroImage}
               formats={["avif"]}
               fallbackFormat="webp"
-              widths={[640, 960, 1280, 1600]}
-              sizes="(max-width: 1023px) 100vw, 55vw"
+              widths={heroWidths}
+              sizes={heroSizes}
               alt="General Tso’s chicken, lo mein, fried rice, spring rolls, beef and broccoli, and sushi"
               class="absolute inset-0 h-full w-full object-cover object-center"
               pictureAttributes={{ class: "absolute inset-0" }}
