@@ -4,6 +4,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import { FontaineTransform } from 'fontaine';
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,6 +15,14 @@ export default defineConfig({
   integrations: [react(), sitemap()],
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [
+      FontaineTransform.vite({
+        fallbacks: {
+          'Geist Variable': ['Arial', 'Liberation Sans', 'DejaVu Sans'],
+          'Barlow Condensed': ['Arial', 'Liberation Sans', 'DejaVu Sans']
+        }
+      }),
+      tailwindcss()
+    ]
   }
 });

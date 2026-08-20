@@ -4,10 +4,33 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Fontaine's Arial fallback is unavailable in Chromium on Linux. */
+@font-face {
+  font-family: "Geist Variable local fallback";
+  src: local("DejaVu Sans");
+  font-style: normal;
+  font-weight: 100 900;
+  size-adjust: 91.8747%;
+  ascent-override: 109.3881%;
+  descent-override: 32.1089%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Barlow Condensed local fallback";
+  src: local("DejaVu Sans");
+  font-style: normal;
+  font-weight: 700 800;
+  size-adjust: 69.3%;
+  ascent-override: 144.3001%;
+  descent-override: 28.86%;
+  line-gap-override: 0%;
+}
+
 @theme inline {
-  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist Variable", "Geist Variable local fallback", "Geist Variable fallback", ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-display);
-  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-display: "Barlow Condensed", "Barlow Condensed local fallback", "Barlow Condensed fallback", "Arial Narrow", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --color-sand: #f3f0e8;
   --color-charcoal: #24211e;
