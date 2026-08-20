@@ -1,0 +1,193 @@
+---
+import { directionsUrl, phoneHref, socialLinks } from "@/data/site";
+import geistLatinUrl from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
+import barlowCondensed700LatinUrl from "@fontsource/barlow-condensed/files/barlow-condensed-latin-700-normal.woff2?url";
+import barlowCondensed800LatinUrl from "@fontsource/barlow-condensed/files/barlow-condensed-latin-800-normal.woff2?url";
+import "@/styles/global.css";
+
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const currentYear = new Date().getFullYear();
+const isHomePage = Astro.url.pathname === "/";
+const isMenuPage = Astro.url.pathname.startsWith("/menu");
+const restaurantDescription = "Grand Buffet serves Chinese food, sushi, and hibachi in Pace, Florida. Dine in for lunch or dinner, or call ahead for takeout.";
+const fontFaces = `
+  @font-face {
+    font-family: "Geist Variable";
+    font-style: normal;
+    font-display: optional;
+    font-weight: 100 900;
+    src: url("${geistLatinUrl}") format("woff2-variations");
+  }
+
+  @font-face {
+    font-family: "Barlow Condensed";
+    font-style: normal;
+    font-display: optional;
+    font-weight: 700;
+    src: url("${barlowCondensed700LatinUrl}") format("woff2");
+  }
+
+  @font-face {
+    font-family: "Barlow Condensed";
+    font-style: normal;
+    font-display: optional;
+    font-weight: 800;
+    src: url("${barlowCondensed800LatinUrl}") format("woff2");
+  }
+`;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.grandbuffetpace.com/#website",
+      name: "Grand Buffet",
+      url: "https://www.grandbuffetpace.com/",
+      inLanguage: "en-US",
+    },
+    {
+      "@type": "Restaurant",
+      "@id": "https://www.grandbuffetpace.com/#restaurant",
+      name: "Grand Buffet",
+      alternateName: "Pace Grand Buffet",
+      url: "https://www.grandbuffetpace.com/",
+      image: "https://www.grandbuffetpace.com/og-grand-buffet.jpg",
+      description: restaurantDescription,
+      telephone: "+1-850-994-3333",
+      priceRange: "$$",
+      servesCuisine: ["Chinese", "Sushi", "Hibachi"],
+      sameAs: socialLinks.map(({ href }) => href),
+      hasMenu: "https://www.grandbuffetpace.com/menu/",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "4210 Highway 90",
+        addressLocality: "Pace",
+        addressRegion: "FL",
+        postalCode: "32571",
+        addressCountry: "US",
+      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+          opens: "11:00",
+          closes: "21:00",
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Friday", "Saturday"],
+          opens: "11:00",
+          closes: "22:00",
+        },
+      ],
+      hasMap: directionsUrl,
+    },
+  ],
+} as const;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#a7292f" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" href={geistLatinUrl} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={barlowCondensed800LatinUrl} as="font" type="font/woff2" crossorigin="anonymous" />
+    <style is:inline set:html={fontFaces} />
+    <meta property="og:type" content="restaurant.restaurant" />
+    <meta property="og:site_name" content="Grand Buffet" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content="https://www.grandbuffetpace.com/og-grand-buffet.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Chinese dishes served at Grand Buffet" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://www.grandbuffetpace.com/og-grand-buffet.jpg" />
+    <title>{title}</title>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </head>
+  <body id="top" class="min-h-screen bg-sand text-charcoal antialiased selection:bg-yellow/45">
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <div class="bg-red px-4 py-2.5 text-center text-xs font-semibold tracking-wide text-white sm:text-sm">
+      Open every day at 11 AM · Dine in and takeout
+    </div>
+
+    <header class="border-b border-charcoal/12 bg-white">
+      <div class="mx-auto flex h-[76px] max-w-[90rem] items-center justify-between px-4 sm:h-20 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
+        <a href="/" class="pressable inline-flex min-h-11 items-center gap-3" aria-label="Grand Buffet home">
+          <span class="wordmark">Grand<br />Buffet</span>
+          <span class="hidden border-l border-charcoal/15 pl-3 text-xs font-medium leading-tight text-charcoal/65 sm:block">Pace,<br />Florida</span>
+        </a>
+
+        <nav class="hidden items-center gap-6 text-sm font-semibold md:flex lg:gap-7" aria-label="Primary navigation">
+          <a class="nav-link" href="/" aria-current={isHomePage ? "page" : undefined}>Home</a>
+          <a class="nav-link" href="/menu/" aria-current={isMenuPage ? "page" : undefined}>Takeout menu</a>
+          <span class="h-5 w-px bg-charcoal/15" aria-hidden="true"></span>
+          <a class="nav-link" href="/#buffet">Buffet prices</a>
+          <a class="nav-link" href="/#visit">Hours & location</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <nav class="flex items-center md:hidden" aria-label="Page navigation">
+            <a href="/" class="mobile-header-link pressable inline-flex" aria-current={isHomePage ? "page" : undefined}>Home</a>
+            <a href="/menu/" class="mobile-header-link pressable inline-flex" aria-current={isMenuPage ? "page" : undefined}>Menu</a>
+          </nav>
+          <a href={phoneHref} class="header-phone" aria-label="Call Grand Buffet at 850-994-3333">
+            <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7.4 3.5 10 8l-2.2 2.1a14.1 14.1 0 0 0 6.1 6.1L16 14l4.5 2.6v3.1c0 .7-.6 1.3-1.3 1.3C10.3 20.5 3.5 13.7 3 4.8c0-.7.6-1.3 1.3-1.3h3.1Z" /></svg>
+            <span class="hidden sm:inline">(850) 994-3333</span>
+            <span class="sm:hidden">Call</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="mobile-footer border-t border-white/15 bg-charcoal px-4 pt-10 text-white sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
+      <div class="mx-auto flex max-w-[90rem] flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <a href="/" class="pressable inline-flex min-h-11 items-center font-display text-3xl font-extrabold uppercase leading-[.8] tracking-tight">Grand<br />Buffet</a>
+          <p class="mt-4 text-sm text-white/55">Chinese buffet, sushi, hibachi, and takeout in Pace, Florida.</p>
+          <nav class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold" aria-label="Social media">
+            {socialLinks.map(({ label, href }) => (
+              <a href={href} target="_blank" rel="noopener noreferrer" class="pressable inline-flex items-center gap-1.5 text-white/70 underline decoration-white/20 underline-offset-4 hover:text-white hover:decoration-white/60" aria-label={`${label} (opens in a new tab)`}>
+                {label}
+                <svg viewBox="0 0 16 16" class="size-3" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h8v8M13 3 4 12" /></svg>
+              </a>
+            ))}
+          </nav>
+        </div>
+        <div class="text-xs leading-5 text-white/55 sm:text-right">
+          <p>© {currentYear} Grand Buffet</p>
+          <p>Menu prices may change. Call to confirm.</p>
+        </div>
+      </div>
+    </footer>
+
+    <nav class="mobile-action-bar fixed inset-x-3 z-50 grid grid-cols-2 gap-2 border border-white/15 bg-charcoal p-2 shadow-2xl sm:hidden" aria-label="Quick actions">
+      <a href={phoneHref} class="grid h-12 place-items-center rounded-sm bg-yellow text-sm font-bold text-charcoal active:scale-[.97]">Call to order</a>
+      <a href={directionsUrl} class="grid h-12 place-items-center rounded-sm border border-white/25 text-sm font-bold text-white active:scale-[.97]">Directions</a>
+    </nav>
+  </body>
+</html>

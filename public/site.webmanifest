@@ -1,0 +1,16 @@
+{
+  "name": "Grand Buffet Pace",
+  "short_name": "Grand Buffet",
+  "description": "Chinese buffet, sushi, hibachi, and takeout in Pace, Florida.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4efe5",
+  "theme_color": "#8e252a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
