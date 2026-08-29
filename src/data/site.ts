@@ -8,7 +8,10 @@ export const onlineOrderLinks = {
 } as const;
 
 export const socialLinks = [
-  { label: "Facebook", href: "https://www.facebook.com/grandbuffett/" },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=100069718834959",
+  },
   { label: "Yelp", href: "https://www.yelp.com/biz/grand-buffet-pace" },
   { label: "Tripadvisor", href: "https://www.tripadvisor.com/Restaurant_Review-g34451-d2259792-Reviews-Grand_Buffet-Milton_Florida.html" },
 ] as const;
